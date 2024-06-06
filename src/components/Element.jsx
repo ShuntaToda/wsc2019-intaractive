@@ -70,6 +70,17 @@ export const Element = ({ element, setElements, elements }) => {
       });
     }
   }, [elements])
+
+  const deleteElement = () => {
+    setElements(prevElements => {
+      const newElements = prevElements.filter(prevElement => prevElement.id !== element.id)
+      newElements.forEach(prevElement => {
+        const newRelations = prevElement.relations.filter(relation => relation !== element.id)
+        prevElement.setRelations(newRelations)
+      })
+      return [...newElements]
+    })
+  }
   return (
     <div ref={elementRef} className='element bg-light rounded-circle border border-3 position-absolute p-5' style={style}>
       <div className='overflow-hidden position-absolute' style={{ inset: 0, rotate: "45deg" }}>
@@ -80,6 +91,7 @@ export const Element = ({ element, setElements, elements }) => {
         <div onClick={clickElement3} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: "50%" }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>3</span></div>
         <div onClick={clickElement4} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: 0 }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>4</span></div>
       </div>
+      <div className='btn btn-sm btn-danger' onClick={deleteElement} style={{ position: "absolute", top: "-10px", left: "-20px" }}>delete</div>
     </div>
   )
 }

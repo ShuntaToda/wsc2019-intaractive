@@ -7,6 +7,7 @@ import "./App.css"
 function App() {
   const startElements = [new elementClass(200, 200)]
   const [elements, setElements] = useState(startElements)
+  useEffect(() => console.log(elements), [elements])
   return (
     <div className="App position-relative">
       {elements.map(element => <Element key={element.id} element={element} setElements={setElements} elements={elements} />)}

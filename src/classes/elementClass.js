@@ -13,7 +13,10 @@ export class elementClass {
   }
 
   setRelation = (childElement) => {
-    console.log([...this.relations, childElement.id]);
     this.relations = [...this.relations, childElement.id]
+  }
+
+  setRelations = (relations) => {
+    this.relations = relations
   }
 } 
