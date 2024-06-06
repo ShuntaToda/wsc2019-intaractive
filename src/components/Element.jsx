@@ -1,15 +1,17 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { elementClass } from '../classes/elementClass'
 import { RelationLine } from './RelationLine'
 
 export const Element = ({ element, setElements, elements }) => {
   const elementRef = useRef(null)
+  const [idDragging, setIsDoragging] = useState(false)
+  const [position, setPosition] = useState({ x: element.startX, y: element.startY })
 
   const style = {
     width: "100px",
     height: "100px",
-    top: `${element.startY}px`,
-    left: `${element.startX}px`,
+    top: `${position.y}px`,
+    left: `${position.x}px`,
   }
   const numberStyle = {
     width: "50px",
@@ -39,16 +41,44 @@ export const Element = ({ element, setElements, elements }) => {
   const clickElement4 = () => {
     createElement(element.rect.left - 200, element.rect.top)
   }
+  const drag = (e) => {
+    setElements(prevElements => {
+      const index = prevElements.findIndex(el => el.id === element.id)
+      prevElements[index].setElement(elementRef.current)
+      return [...prevElements]
+    })
+    setPosition({ x: e.clientX, y: e.clientY })
+  }
+  const dragEnd = (e) => {
+    console.log("end");
+    setIsDoragging(false)
+    setPosition({ x: e.clientX, y: e.clientY })
+  }
 
+  useEffect(() => {
+    if (element.element === undefined) return
+    const checkElements = element.element.querySelectorAll("div > .addElBtn")
+    checkElements.forEach(el => {
+      el.addEventListener("drag", drag)
+      el.addEventListener("dragend", dragEnd)
+    });
+
+    return () => {
+      checkElements.forEach(el => {
+        el.removeEventListener("drag", drag)
+        el.removeEventListener("dragend", dragEnd)
+      });
+    }
+  }, [elements])
   return (
     <div ref={elementRef} className='element bg-light rounded-circle border border-3 position-absolute p-5' style={style}>
       <div className='overflow-hidden position-absolute' style={{ inset: 0, rotate: "45deg" }}>
         <div className='position-absolute border-end border-3' style={{ width: "50%", height: "100%", top: 0, left: 0, zIndex: -1 }}></div>
         <div className='position-absolute border-top border-3' style={{ width: "100%", height: "50%", top: "50%", left: 0, zIndex: -1 }}></div>
-        <div onClick={clickElement1} className='position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: 0, left: 0 }}><span style={{ rotate: "-45deg" }}>1</span></div>
-        <div onClick={clickElement2} className='position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: 0, left: "50%" }}><span style={{ rotate: "-45deg" }}>2</span></div>
-        <div onClick={clickElement3} className='position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: "50%" }}><span style={{ rotate: "-45deg" }}>3</span></div>
-        <div onClick={clickElement4} className='position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: 0 }}><span style={{ rotate: "-45deg" }}>4</span></div>
+        <div onClick={clickElement1} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: 0, left: 0 }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>1</span></div>
+        <div onClick={clickElement2} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: 0, left: "50%" }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>2</span></div>
+        <div onClick={clickElement3} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: "50%" }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>3</span></div>
+        <div onClick={clickElement4} className='addElBtn position-absolute d-flex justify-content-center align-items-center' style={{ ...numberStyle, top: "50%", left: 0 }}><span style={{ rotate: "-45deg", pointerEvents: "none" }}>4</span></div>
       </div>
     </div>
   )

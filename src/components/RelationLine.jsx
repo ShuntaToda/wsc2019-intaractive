@@ -30,6 +30,6 @@ export const RelationLine = ({ element, childId, elements }) => {
     left: element.rect.x + (element.rect.width / 2)
   }
   return (
-    <div className='position-absolute' style={lineStyle}>{width}</div>
+    <div className='position-absolute' style={lineStyle}></div>
   )
 }
