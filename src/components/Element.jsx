@@ -41,7 +41,7 @@ export const Element = ({ element, setElements, elements }) => {
   }
 
   return (
-    <div ref={elementRef} className='bg-light rounded-circle border border-3 position-absolute p-5' style={style}>
+    <div ref={elementRef} className='element bg-light rounded-circle border border-3 position-absolute p-5' style={style}>
       <div className='overflow-hidden position-absolute' style={{ inset: 0, rotate: "45deg" }}>
         <div className='position-absolute border-end border-3' style={{ width: "50%", height: "100%", top: 0, left: 0, zIndex: -1 }}></div>
         <div className='position-absolute border-top border-3' style={{ width: "100%", height: "50%", top: "50%", left: 0, zIndex: -1 }}></div>

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { elementClass } from "./classes/elementClass";
 import { Element } from "./components/Element";
 import { RelationLine } from "./components/RelationLine";
+import "./App.css"
 
 function App() {
   const startElements = [new elementClass(200, 200)]
