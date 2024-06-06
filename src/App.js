@@ -10,7 +10,7 @@ function App() {
     <div className="App position-relative">
       {elements.map(element => <Element key={element.id} element={element} setElements={setElements} elements={elements} />)}
       {elements.map(element => {
-        return element.relations.map(childId => <RelationLine element={element} childId={childId} elements={elements} />)
+        return element.relations.map(childId => <RelationLine key={childId} element={element} childId={childId} elements={elements} />)
       })}
     </div>
   );

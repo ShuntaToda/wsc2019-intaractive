@@ -15,7 +15,7 @@ export const RelationLine = ({ element, childId, elements }) => {
     const dy = element.rect.y - childElement.rect.y
 
     const radians = Math.atan2(dx, dy)
-    setDeg(radians * (180 / Math.PI) + 90)
+    setDeg(-(radians * (180 / Math.PI) + 90))
   }, [elements])
 
 
