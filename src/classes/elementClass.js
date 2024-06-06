@@ -1,12 +1,19 @@
 export class elementClass {
-  constructor() {
+  constructor(startX, startY) {
     this.id = Math.floor(Math.random() * 99999999999);
     this.shape = "circle"
     this.relations = []
+    this.startX = startX
+    this.startY = startY
   }
 
   setElement = (element) => {
     this.element = element
     this.rect = element.getBoundingClientRect()
+  }
+
+  setRelation = (childElement) => {
+    console.log([...this.relations, childElement.id]);
+    this.relations = [...this.relations, childElement.id]
   }
 } 
